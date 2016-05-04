@@ -1,0 +1,37 @@
+use taxiproject
+
+db.admins.insert({username:'salamlam',password:'4444'})
+
+db.countrys.insert({name:'Tunisia',city:[{name:'Sousse'},{name:'Tunis'},{name:'Ariana'},{name:'Monastir'},
+{name:'Mahdia'},{name:'Beja'},{name:'Ben Arous'},{name:'Bizerte'},{name:'Gabes'},{name:'Gafsa'},{name:'Jendouba'},
+{name:'Kairouan'},{name:'Kasserine'},{name:'Kebili'},{name:'Kef'},{name:'Manouba'},{name:'Medenine'},{name:'Nabeul'},
+{name:'Sfax'},{name:'Sidi Bouzid'},{name:'Siliana'},{name:'Tataouine'},{name:'Tozeur'},{name:'Zaghouan'}]})
+
+db.countrys.insert({name:'United Kingdom',city:[{name:'London'},{name:'Southampton'}]})
+db.countrys.insert({name:'France',city:[{name:'Paris'},{name:'Lille'}]})
+
+db.drivers.update({fname:'Salem'},{$set:{connected:false}})
+db.drivers.update({fname:'med'},{$push:{taxis:{model:'Golf 5',serial:'102/2036',places:'4',luggages:'30',color:'#552025',date:'23/04/2016',working:true}}})
+db.reclamations.update({subject:'ssss'},{$set:{status:true}})
+db.reclamations.insert({token:'56c2fac26906f8ea1f49b4af',username:'Faten Belhadj',subject:'Bla bla',date:'17-02-2016',status:true})
+db.reclamations.update({_id:'56cdb378d2fc840f0e2d9715'},{$push:{messages:{sender:true,message:'xxx',date:'xxx'}}},{upsert:true})
+db.services.insert({name:'g1',value:1})
+db.services.insert({name:'g2',value:2})
+db.services.insert({name:'g3',value:3})
+db.drivers.update({fname:'Med'},{$set:{pt:7}})
+db.drivers.update({fname:'Mahdi'},{$push:{taxis:{working:true,model:'Clio',serial:'98tn2036',places:'4',luggages:'15',color:'#ff5486',date:'23/04/2016'}}})
+
+db.taxicabs.insert({mark:'Volkswagen',model:'Golf 5',serial:'180/5555',places:5,luggages:35,color:'#449658',date:'20/4/2013'})
+db.taxi.insert({mark:'Renault',model:'Clio 4',serial:'175/4444',places:5,luggages:35,color:'#302525',date:'20/7/2015'})
+db.taxis.save({mark:'Renault',model:'Clio 3',serial:'170/4040',places:5,luggages:35,color:'#112525',date:'20/7/2015'})
+
+db.drivers.aggregate({$unwind:'$taxis'},{$match:{fname:'Salem'}},{$sort:{'taxis.date':-1}})
+db.drivers.find({fname:'Salem'},{_id:0,taxis:1}).sort({'taxis.date':-1})
+
+db.drivers.update(
+  { fname: 'Salem' },
+  { $pull: { taxis: { places: 5 } } },
+  { multi: true }
+)
+
+db.downloads.update({name:'Matlab'},{$set:{name:'Matlab 2016'}})
