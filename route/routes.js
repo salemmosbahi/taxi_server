@@ -199,6 +199,32 @@ module.exports = function(app){
 		}
 	});
 
+	app.post('/getAllMark',function(req,res){
+		country.getAllMark(function(found){
+			res.json(found);
+		});
+	});
+
+	app.post('/getOnePublicity',function(req,res){
+		var name = req.body.name;
+		country.getOnePublicity(name,function(found){
+			res.json(found);
+		});
+	});
+
+	app.post('/getAllPublicity',function(req,res){
+		country.getAllPublicity(function(found){
+			res.json(found);
+		});
+	});
+
+	app.post('/getOneTaxi',function(req,res){
+		var serial = req.body.serial;
+		taxi.getOneTaxi(serial,function(found){
+			res.json(found);
+		});
+	});
+
 	app.post('/getAllTaxi',function(req,res){
 		taxi.getAllTaxi(function(found){
 			res.json(found);
@@ -223,6 +249,37 @@ module.exports = function(app){
 		var token = req.body.token;
 		var idTaxi = req.body._id;
 		taxi.addTaxiToDriver(token,idTaxi,function(found){
+			res.json(found);
+		});
+	});
+
+	/*app.post('/editTaxi',function(req,res){
+		var idTaxi = req.body._id;
+		var working = (req.body.working == "true") ? true : false;
+		taxi.editTaxi(idTaxi,working,function(found){
+			res.json(found);
+		});
+	});*/
+
+	app.post('/addTaxi',function(req,res){
+		var mark = req.body.mark;
+		var model = req.body.model;
+		var serial = req.body.serial;
+		var places = parseInt(req.body.places);
+		var luggages = parseInt(req.body.luggages);
+		var date = req.body.date;
+		//console.log(mark+ ' ' +model+ ' ' +serial+ ' ' +places+ ' ' +luggages+ ' ' +date);
+		taxi.addTaxi(mark,model,serial,places,luggages,date,function(found){
+			res.json(found);
+		});
+	});
+
+	app.post('/addPublicity',function(req,res){
+		var name = req.body.name;
+		var period = req.body.period;
+		var price = parseInt(req.body.price);
+		var date = req.body.date;
+		country.addPublicity(name,period,price,date,function(found){
 			res.json(found);
 		});
 	});

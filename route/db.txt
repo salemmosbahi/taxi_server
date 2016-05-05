@@ -35,3 +35,8 @@ db.drivers.update(
 )
 
 db.downloads.update({name:'Matlab'},{$set:{name:'Matlab 2016'}})
+
+db.marks.insert({name:'Volkswagen'})
+db.marks.insert({name:'Renault'})
+
+db.pubs.insert({name:'sabrine',period:'6 month',price:'1000',date:'2016/5/25'})
