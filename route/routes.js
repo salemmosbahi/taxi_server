@@ -114,6 +114,12 @@ module.exports = function(app){
 			res.json(found);
 		});
 	});
+	
+	app.post('/getAllReclamationAdmin',function(req,res){
+		reclamation.getAllReclamationAdmin(function(found){
+			res.json(found);
+		});
+	});
 
 	app.post('/addReclamation',function(req,res){
 		var key = method.key(req.body.key);
@@ -138,6 +144,22 @@ module.exports = function(app){
 		var idRec = req.body._id;
 		var message = method.decode(req.body.message,key);
 		reclamation.addMessage(idRec,message,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/addMessageAdmin',function(req,res){
+		var idRec = req.body._id;
+		var message = req.body.message;
+		reclamation.addMessageAdmin(idRec,message,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/addService',function(req,res){
+		var name = req.body.name;
+		var value = req.body.value;
+		service.addService(name,value,function(found){
 			res.json(found);
 		});
 	});
@@ -252,14 +274,13 @@ module.exports = function(app){
 			res.json(found);
 		});
 	});
-
-	/*app.post('/editTaxi',function(req,res){
-		var idTaxi = req.body._id;
-		var working = (req.body.working == "true") ? true : false;
-		taxi.editTaxi(idTaxi,working,function(found){
+	
+	app.post('/deleteTaxi',function(req,res){
+		var id = req.body._id;
+		taxi.deleteTaxi(id,function(found){
 			res.json(found);
 		});
-	});*/
+	});
 
 	app.post('/addTaxi',function(req,res){
 		var mark = req.body.mark;
