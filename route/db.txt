@@ -10,6 +10,9 @@ db.countrys.insert({name:'Tunisia',city:[{name:'Sousse'},{name:'Tunis'},{name:'A
 db.countrys.insert({name:'United Kingdom',city:[{name:'London'},{name:'Southampton'}]})
 db.countrys.insert({name:'France',city:[{name:'Paris'},{name:'Lille'}]})
 
+db.marks.insert({name:'Volkswagen'})
+db.marks.insert({name:'Renault'})
+
 db.drivers.update({fname:'Salem'},{$set:{connected:false}})
 db.drivers.update({fname:'med'},{$push:{taxis:{model:'Golf 5',serial:'102/2036',places:'4',luggages:'30',color:'#552025',date:'23/04/2016',working:true}}})
 db.reclamations.update({subject:'ssss'},{$set:{status:true}})
@@ -35,8 +38,5 @@ db.drivers.update(
 )
 
 db.downloads.update({name:'Matlab'},{$set:{name:'Matlab 2016'}})
-
-db.marks.insert({name:'Volkswagen'})
-db.marks.insert({name:'Renault'})
 
 db.pubs.insert({name:'sabrine',period:'6 month',price:'1000',date:'2016/5/25'})

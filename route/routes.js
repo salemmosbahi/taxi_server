@@ -276,10 +276,18 @@ module.exports = function(app){
 
 	app.post('/addPublicity',function(req,res){
 		var name = req.body.name;
+		var category = req.body.category;
 		var period = req.body.period;
 		var price = parseInt(req.body.price);
 		var date = req.body.date;
-		country.addPublicity(name,period,price,date,function(found){
+		country.addPublicity(name,category,period,price,date,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/deletePublicity',function(req,res){
+		var id = req.body._id;
+		country.deletePublicity(id,function(found){
 			res.json(found);
 		});
 	});
