@@ -259,6 +259,13 @@ module.exports = function(app){
 			res.json(found);
 		});
 	});
+	
+	app.post('/getPublicityById',function(req,res){
+		var id = req.body._id;
+		country.getPublicityById(id,function(found){
+			res.json(found);
+		});
+	});
 
 	app.post('/getAllPublicity',function(req,res){
 		country.getAllPublicity(function(found){
@@ -328,6 +335,18 @@ module.exports = function(app){
 		var price = parseInt(req.body.price);
 		var date = req.body.date;
 		country.addPublicity(name,category,period,price,date,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/editPublicity',function(req,res){
+		var id = req.body._id;
+		var name = req.body.name;
+		var category = req.body.category;
+		var period = req.body.period;
+		var price = parseInt(req.body.price);
+		var date = req.body.date;
+		country.editPublicity(id,name,category,period,price,date,function(found){
 			res.json(found);
 		});
 	});
