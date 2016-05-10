@@ -100,6 +100,18 @@ module.exports = function(app){
 			});
 		}
 	});
+	
+	app.post('/getAllClients',function(req,res){
+		client.getAllClients(function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/getAllDrivers',function(req,res){
+		driver.getAllDrivers(function(found){
+			res.json(found);
+		});
+	});
 
 	app.post('/getDriver',function(req,res){
 		var token = req.body.token;
@@ -170,6 +182,18 @@ module.exports = function(app){
 		});
 	});
 
+	app.post('/getAllBookNow',function(req,res){
+		book.getAllBookNow(function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/getAllBookAdvance',function(req,res){
+		book.getAllBookAdvance(function(found){
+			res.json(found);
+		});
+	});
+	
 	app.post('/addBook',function(req,res){
 		var tokenDriver = req.body.tokenDriver;
 		var nameDriver = req.body.username;
@@ -198,6 +222,8 @@ module.exports = function(app){
 
 	app.post('/addBookAdvance',function(req,res){
 		var key = method.key(req.body.key);
+		var token = req.body.token;
+		var username = method.decode(req.body.username,key);
 		var date = method.decode(req.body.date,key);
 		var latitude = method.decode(req.body.latitude,key);
 		var longitude = method.decode(req.body.longitude,key);
@@ -211,11 +237,11 @@ module.exports = function(app){
 			var fri = method.decode(req.body.fri,key);
 			var sat = method.decode(req.body.sat,key);
 			var sun = method.decode(req.body.sun,key);
-			book.addBookAdvanceWithRepeat(latitude,longitude,date,description,mon,tue,wed,thu,fri,sat,sun,function(found){
+			book.addBookAdvanceWithRepeat(token,username,latitude,longitude,date,description,mon,tue,wed,thu,fri,sat,sun,function(found){
 				res.json(found);
 			});
 		} else {
-			book.addBookAdvanceWithoutRepeat(latitude,longitude,date,description,function(found){
+			book.addBookAdvanceWithoutRepeat(token,username,latitude,longitude,date,description,function(found){
 				res.json(found);
 			});
 		}
