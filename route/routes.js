@@ -46,6 +46,38 @@ module.exports = function(app){
 			});
 		}
 	});
+	
+	app.post('/editAge',function(req,res){
+		var key = method.key(req.body.key);
+		var app = method.decode(req.body.app,key);
+		var token = req.body.token;
+		var date = method.decode(req.body.dateN,key);
+		if (app == "AppTaxi") {
+			client.editAge(token,date,function(found){
+				res.json(found);
+			});
+		} else if (app == "AppTaxiDriver") {
+			driver.editAge(token,date,function(found){
+				res.json(found);
+			});
+		}
+	});
+	
+	app.post('/editPhone',function(req,res){
+		var key = method.key(req.body.key);
+		var app = method.decode(req.body.app,key);
+		var token = req.body.token;
+		var phone = method.decode(req.body.phone,key);
+		if (app == "AppTaxi") {
+			client.editPhone(token,phone,function(found){
+				res.json(found);
+			});
+		} else if (app == "AppTaxiDriver") {
+			driver.editPhone(token,phone,function(found){
+				res.json(found);
+			});
+		}
+	});
 
 	app.post('/loginAdmin',function(req,res){
 		var username = req.body.username;
@@ -178,6 +210,29 @@ module.exports = function(app){
 
 	app.post('/getAllService',function(req,res){
 		service.getAllService(function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/getServiceById',function(req,res){
+		var id = req.body._id;
+		service.getServiceById(id,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/editService',function(req,res){
+		var id = req.body._id;
+		var name = req.body.name;
+		var value = req.body.value;
+		service.editService(id,name,value,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/deleteService',function(req,res){
+		var id = req.body._id;
+		service.deleteService(id,function(found){
 			res.json(found);
 		});
 	});
