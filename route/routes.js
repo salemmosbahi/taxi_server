@@ -133,6 +133,35 @@ module.exports = function(app){
 		}
 	});
 	
+	app.post('/disableAccountAdmin',function(req,res){
+		var account = req.body.account;
+		var token = req.body.token;
+		if (account == "client") {
+			client.disableAccountAdmin(token,function(found){
+				res.json(found);
+			});
+		} else if (account == "driver") {
+			driver.disableAccountAdmin(token,function(found){
+				res.json(found);
+			});
+		}
+	});
+	
+	app.post('/disableAccount',function(req,res){
+		var key = method.key(req.body.key);
+		var app = method.decode(req.body.app,key);
+		var token = req.body.token;
+		if (app == "AppTaxi") {
+			client.disableAccount(token,function(found){
+				res.json(found);
+			});
+		} else if (app == "AppTaxiDriver") {
+			driver.disableAccount(token,function(found){
+				res.json(found);
+			});
+		}
+	});
+	
 	app.post('/getAllClients',function(req,res){
 		client.getAllClients(function(found){
 			res.json(found);
@@ -343,6 +372,7 @@ module.exports = function(app){
 
 	app.post('/getTaxiDriving',function(req,res){
 		var token = req.body.token;
+		console.log(token);
 		driver.getTaxi(token,function(found){
 			res.json(found);
 		});
@@ -366,6 +396,13 @@ module.exports = function(app){
 	app.post('/deleteTaxi',function(req,res){
 		var id = req.body._id;
 		taxi.deleteTaxi(id,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/renewalTaxi',function(req,res){
+		var id = req.body._id;
+		taxi.renewalTaxi(id,function(found){
 			res.json(found);
 		});
 	});
