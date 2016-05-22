@@ -102,6 +102,20 @@ module.exports = function(app){
 			});
 		}
 	});
+	
+	app.post('/profileAdmin',function(req,res){
+		var token = req.body._id;
+		var account = req.body.account;
+		if (account === "client") {
+			client.profileAdmin(token,function(found){
+				res.json(found);
+			});
+		} else if (account === "driver") {
+			driver.profileAdmin(token,function(found){
+				res.json(found);
+			});
+		}
+	});
 
 	app.post('/profile',function(req,res){
 		var key = method.key(req.body.key);
@@ -151,12 +165,13 @@ module.exports = function(app){
 		var key = method.key(req.body.key);
 		var app = method.decode(req.body.app,key);
 		var token = req.body.token;
+		var password = method.decode(req.body.password,key);
 		if (app == "AppTaxi") {
-			client.disableAccount(token,function(found){
+			client.disableAccount(token,password,function(found){
 				res.json(found);
 			});
 		} else if (app == "AppTaxiDriver") {
-			driver.disableAccount(token,function(found){
+			driver.disableAccount(token,password,function(found){
 				res.json(found);
 			});
 		}
@@ -190,6 +205,13 @@ module.exports = function(app){
 	
 	app.post('/getAllReclamationAdmin',function(req,res){
 		reclamation.getAllReclamationAdmin(function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/changeSeen',function(req,res){
+		var id = req.body._id;
+		reclamation.changeSeen(id,function(found){
 			res.json(found);
 		});
 	});
@@ -278,6 +300,35 @@ module.exports = function(app){
 		});
 	});
 	
+	app.post('/getAdvanceByDriver',function(req,res){
+		var token = req.body.token;
+		book.getAdvanceByDriver(token,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/getAdvanceById',function(req,res){
+		var id = req.body._id;
+		book.getAdvanceById(id,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/acceptDemand',function(req,res){
+		var id = req.body._id;
+		var token = req.body.token;
+		var username = req.body.username;
+		book.acceptDemand(id,token,username,function(found){
+			res.json(found);
+		});
+	});
+	
+	app.post('/getAdvanceWaiting',function(req,res){
+		book.getAdvanceWaiting(function(found){
+			res.json(found);
+		});
+	});
+	
 	app.post('/addBook',function(req,res){
 		var tokenDriver = req.body.tokenDriver;
 		var nameDriver = req.body.username;
@@ -311,9 +362,12 @@ module.exports = function(app){
 		var date = method.decode(req.body.date,key);
 		var latitude = method.decode(req.body.latitude,key);
 		var longitude = method.decode(req.body.longitude,key);
-		var repeat = method.decode(req.body.repeat,key);
+		//var repeat = method.decode(req.body.repeat,key);
 		var description = method.decode(req.body.description,key);
-		if (repeat == 'true') {
+		book.addBookAdvance(token,username,latitude,longitude,date,description,function(found){
+				res.json(found);
+			});
+		/*if (repeat == 'true') {
 			var mon = method.decode(req.body.mon,key);
 			var tue = method.decode(req.body.tue,key);
 			var wed = method.decode(req.body.wed,key);
@@ -328,7 +382,7 @@ module.exports = function(app){
 			book.addBookAdvanceWithoutRepeat(token,username,latitude,longitude,date,description,function(found){
 				res.json(found);
 			});
-		}
+		}*/
 	});
 
 	app.post('/getAllMark',function(req,res){
